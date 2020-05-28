@@ -17,7 +17,47 @@
 
 package com.example.android.marsrealestate.overview
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.example.android.marsrealestate.databinding.GridViewItemBinding
+import com.example.android.marsrealestate.network.MarsProperty
+
 // TODO (06) Create PhotoGridAdapter that extends the RecyclerView ListAdapter with DiffCallback
-// TODO (07) Add unimplemented members for PhotoGridAdapter, create and implement DiffCallback companion class
-// TODO (08) Create and implement the MarsPropertyViewHolder inner class.
-// TODO (09) Override and implement onCreateViewHolder and onBindViewHolder
+class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
+
+    // TODO (07) Add unimplemented members for PhotoGridAdapter, create and implement
+    //  DiffCallback companion class
+    companion object DiffCallback : DiffUtil.ItemCallback<MarsProperty>() {
+        override fun areItemsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
+            return oldItem === newItem
+        }
+        override fun areContentsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }
+
+    // TODO (08) Create and implement the MarsPropertyViewHolder inner class.
+    class MarsPropertyViewHolder(private var binding: GridViewItemBinding):
+            RecyclerView.ViewHolder(binding.root) {
+        fun bind(marsProperty: MarsProperty) {
+            binding.property = marsProperty
+            binding.executePendingBindings()
+        }
+    }
+
+    // TODO (09) Override and implement onCreateViewHolder and onBindViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup,
+                                    viewType: Int): PhotoGridAdapter.MarsPropertyViewHolder {
+        return MarsPropertyViewHolder(GridViewItemBinding.inflate(LayoutInflater.from(parent.context)))
+    }
+
+    override fun onBindViewHolder(holder: PhotoGridAdapter.MarsPropertyViewHolder, position: Int) {
+        val marsProperty = getItem(position)
+        holder.bind(marsProperty)
+    }
+}
+
+
