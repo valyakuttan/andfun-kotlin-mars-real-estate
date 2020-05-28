@@ -17,6 +17,26 @@
 
 package com.example.android.marsrealestate
 
+import android.widget.ImageView
+import androidx.core.net.toUri
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+
 // TODO (06) Create the Binding Adapter, converting the imgUrl to a URI with the https scheme
-// TODO (07) Use Glide to load the imgUri into the imgView
-// TODO (11) Add the requestOptions for the placeholder and error into the Glide call
+@BindingAdapter("imageUrl")
+fun bindImage(imgView: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+        Glide.with(imgView.context)
+                .load(imgUri)
+                // TODO (07) Use Glide to load the imgUri into the imgView
+                .apply(RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                // TODO (11) Add the requestOptions for the placeholder and error into the Glide call
+                        .error(R.drawable.ic_broken_image))
+                .into(imgView)
+
+
+    }
+}

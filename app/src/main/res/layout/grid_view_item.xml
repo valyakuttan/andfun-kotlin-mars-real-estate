@@ -21,13 +21,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- TODO (08) Add the viewModel data variable to this layout -->
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.marsrealestate.overview.OverviewViewModel" />
+    </data>
+
     <!-- TODO (09) Set the app:imageUrl attribute to viewModel.property.imgSrcUrl -->
     <ImageView
         android:id="@+id/mars_image"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:padding="2dp"
+        android:scaleType="centerCrop"
+        app:imageUrl="@{viewModel.property.imgSrcUrl}"
         tools:src="@tools:sample/backgrounds/scenic"/>
 </layout>
