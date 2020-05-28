@@ -49,6 +49,10 @@ class OverviewViewModel : ViewModel() {
         get() = _properties
 
     // TODO (05) Add a _navigateToSelectedProperty MutableLiveData externalized as LiveData
+    private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
+
+    val navigateToSelectedProperty: LiveData<MarsProperty>
+        get() = _navigateToSelectedProperty
 
     // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
@@ -95,4 +99,11 @@ class OverviewViewModel : ViewModel() {
     }
 
     // TODO (06) Add displayPropertyDetails and displayPropertyDetailsComplete methods
+    fun displayPropertyDetails(marsProperty: MarsProperty) {
+        _navigateToSelectedProperty.value = marsProperty
+    }
+
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
+    }
 }
