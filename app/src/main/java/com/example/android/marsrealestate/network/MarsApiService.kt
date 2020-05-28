@@ -24,9 +24,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import kotlinx.coroutines.Deferred
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://mars.udacity.com/"
 // TODO (01) Create an enum full of constants to match the query values our web service expects
+enum class MarsApiFilter(val value: String) { SHOW_RENT("rent"), SHOW_BUY("buy"), SHOW_ALL("all") }
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -58,7 +60,7 @@ interface MarsApiService {
      */
     // TODO (02) Add filter @Query value to the getProperties method
     @GET("realestate")
-    fun getProperties():
+    fun getProperties(@Query("filter") type: String):
     // The Coroutine Call Adapter allows us to return a Deferred, a Job with a result
             Deferred<List<MarsProperty>>
 }
